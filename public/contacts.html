@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Свяжитесь с Брестским пивоваром для получения информации или вопросов. Мы всегда рады помочь!">
+    <meta name="keywords" content="контакты, Брестский пивовар, связаться с нами, пивоварня">
+    <title>Контакты | Брестский пивовар</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about">О компании</a></li>
+                <li><a href="/products">Продукция</a></li>
+                <li><a href="/contacts">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h1>Связаться с нами</h1>
+        <p>Мы всегда рады получить ваши сообщения! Заполните форму ниже, и мы свяжемся с вами в ближайшее время.</p>
+
+        <form id="contactForm" action="/contact" method="POST">
+            <label for="name">Ваше имя:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Ваш email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Сообщение:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <input type="submit" value="Отправить">
+        </form>
+
+        <h2>Контактная информация</h2>
+        <p>Адрес: Брест, ул. Пивоваров, 25</p>
+        <p>Телефон: +375 (29) 123-45-67</p>
+        <p>Электронная почта: <a href="mailto:info@brestbrewery.by">info@brestbrewery.by</a></p>
+    </section>
+
+    <footer>
+        <p>© 2025 Брестский пивовар</p>
+    </footer>
+
+    <script>
+        // Обработка формы на клиентской стороне
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Останавливаем стандартную отправку формы
+
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData);
+
+            fetch('/contact', {
+                method: 'POST',
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                document.getElementById('contactForm').reset(); // Сбросить форму
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+        });
+    </script>
+</body>
+</html>
